@@ -1,9 +1,22 @@
 package entity;
 
+import java.util.Date;
+
 public class Member extends Person {
     private String status;
 
-    public Member(int id, String name, String phone, String email,String status) {
+    public Member() {
+    }
+
+    public Member(int id, String name, String phone, String email) {
+        super(id, name, phone, email);
+    }
+
+    public Member(int id, String name, String phone, String email, String gender, Date birthDate, Date registerDate) {
+        super(id, name, phone, email, gender, birthDate, registerDate);
+    }
+
+    public Member(int id, String name, String phone, String email, String status) {
         super(id, name, phone, email);
         this.status = status;
     }
