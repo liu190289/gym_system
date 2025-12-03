@@ -154,7 +154,7 @@ public class MemberDAO {
         //(name,phone,email,status):指定要插入的字段
         //VALUES(?,?,?,?):使用占位符表示要插入的值
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)){
+             PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)){
             //设置占位符的值
             pstmt.setString(1, member.getName());
             pstmt.setString(2, member.getPhone());
@@ -167,6 +167,13 @@ public class MemberDAO {
             int rows = pstmt.executeUpdate();
 
             //如果影响的行数大于0，表示添加成功
+            if (rows > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        member.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
             return rows > 0;
         } catch (SQLException e) {
             e.printStackTrace();

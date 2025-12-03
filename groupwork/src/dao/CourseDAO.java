@@ -73,13 +73,21 @@ public class CourseDAO {
 
     public boolean addCourse(Course course) {
         String sql = "insert into course (name, type, duration, max_capacity, employee_id) values (?, ?, ?, ?, ?)";
-        try (Connection conn = DBUtil.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBUtil.getConnection(); 
+             PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, course.getName());
             pstmt.setString(2, course.getType());
             pstmt.setInt(3, course.getDuration());
             pstmt.setInt(4, course.getMaxCapacity());
             pstmt.setInt(5, course.getEmployeeId());
             int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        course.setCourseId(generatedKeys.getInt(1));
+                    }
+                }
+            }
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
