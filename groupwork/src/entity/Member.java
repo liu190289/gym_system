@@ -10,7 +10,7 @@ public class Member implements Person {
     private String gender;
     private Date birthDate;
     private Date registerDate;
-    private String status;
+    private String status;//active/frozen/inactive
 
     public Member() {
     }
@@ -25,6 +25,7 @@ public class Member implements Person {
         this.registerDate = registerDate;
         this.status = status;//active/frozen/inactive
     }
+
     public Member( String name, String phone, String email, String gender, Date birthDate, Date registerDate, String status) {
         this.name = name;
         this.phone = phone;

@@ -13,7 +13,7 @@ public class MemberDAO {
     public MemberDAO() {
     }
 
-    public Member queryAllMember(ResultSet rs) {
+    public Member queryAllMember(ResultSet rs) throws SQLException{
         Member member = new Member();
         try {
             member.setId(rs.getInt("member_id"));
@@ -74,6 +74,88 @@ public class MemberDAO {
         }
         return member;
     }
+
+
+
+    /**
+     * 根据名字来查询
+     *
+     * @param name 输入你要查询的id
+     * @return 返回查询结果
+     */
+    public List<Member> getMemberByName(String name) {
+        List<Member> member = new ArrayList<>(); {
+        };
+        String sql = "select * from member where name = ?";
+        try(Connection conn=DBUtil.getConnection();PreparedStatement pstmt=conn.prepareStatement(sql);){
+            pstmt.setString(1,name);
+            try(ResultSet rs=pstmt.executeQuery()){
+                while(rs.next()){
+                    member.add(queryAllMember(rs));
+                }
+            }
+            
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return member;
+    }
+
+    /**
+     * 根据名字来查询
+     *
+     * @param gender 输入你要查询的id
+     * @return 返回查询结果
+     */
+    public List<Member> getMemberByGender(String gender) {
+        List<Member> member = new ArrayList<>(); {
+        };
+        String sql = "select * from member where gender = ?";
+        return  getStringMember(gender, sql, member);
+    }
+
+
+    private List<Member> getStringMember(String gender, String sql, List<Member> member) {
+        try(Connection conn=DBUtil.getConnection(); PreparedStatement pstmt=conn.prepareStatement(sql);){
+            pstmt.setString(1, gender);
+            try(ResultSet rs=pstmt.executeQuery()){
+                while(rs.next()){
+                    member.add(queryAllMember(rs));
+                }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return member;
+    }
+
+    public List<Member> getMemberByBirthDate(java.util.Date birthDate) {
+       List<Member> member = new ArrayList<>();
+       String sql = "select * from member where birth_date = ?";
+
+       try (Connection conn = DBUtil.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+           pstmt.setDate(1, new java.sql.Date(birthDate.getTime()));
+           try (ResultSet rs = pstmt.executeQuery()) {
+               while (rs.next()) {
+                   member.add(queryAllMember(rs));
+               }
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return member;
+   }
+
+    public List<Member> getMemberByStatus(String status) {
+        List<Member> member = new ArrayList<>();
+        String sql = "select * from member where status = ?";
+        return getStringMember(status,sql,member);
+    }
+
+
+
 
     /**
      * 添加新成员到数据库
