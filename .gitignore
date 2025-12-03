@@ -9,9 +9,6 @@ target/
 *.iws
 *.ipr
 
-# Maven
-target/
-
 # Gradle
 .gradle/
 build/
