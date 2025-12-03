@@ -23,7 +23,16 @@ public class Member implements Person {
         this.gender = gender;
         this.birthDate = birthDate;
         this.registerDate = registerDate;
-        this.status = status;
+        this.status = status;//active/frozen/inactive
+    }
+    public Member( String name, String phone, String email, String gender, Date birthDate, Date registerDate, String status) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.registerDate = registerDate;
+        this.status = status;//active/frozen/inactive
     }
 
     @Override
