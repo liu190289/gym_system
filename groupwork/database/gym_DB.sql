@@ -113,7 +113,7 @@ CREATE TABLE `course` (
   PRIMARY KEY (`course_id`),
   KEY `employee_id` (`employee_id`),
   CONSTRAINT `course_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='课程表：存储健身房提供的课程信息及对应教练';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='课程表：存储健身房提供的课程信息及对应教练';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'瑜伽基础班','yoga',60,15,1),(2,'高级瑜伽','yoga',90,12,1),(3,'动感单车','spinning',45,20,2),(4,'普拉提塑形','pilates',60,15,3),(5,'有氧健身操','aerobics',50,25,2),(6,'力量训练','strength',60,10,6),(7,'晨练瑜伽','yoga',45,20,1),(8,'晚间放松','yoga',60,15,3);
+INSERT INTO `course` VALUES (1,'瑜伽基础班','yoga',60,15,1),(2,'高级瑜伽','yoga',90,12,1),(3,'动感单车','spinning',45,20,2),(4,'普拉提塑形','pilates',60,15,3),(5,'有氧健身操','aerobics',50,25,2),(6,'力量训练','strength',60,10,6),(7,'晨练瑜伽','yoga',45,20,1),(8,'晚间放松','yoga',60,15,3),(9,'测试课程','yoga',60,20,1);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,6 +165,35 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `employee` (
+  `employee_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `role_id` int DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `hire_date` date NOT NULL,
+  PRIMARY KEY (`employee_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `employee_role` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表：存储健身房员工信息，包括教练、前台和管理员';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee`
+--
+
+LOCK TABLES `employee` WRITE;
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+INSERT INTO `employee` VALUES (1,'张教练',1,'13800001111','2023-01-15'),(2,'李教练',1,'13800002222','2023-03-20'),(3,'王教练',1,'13800003333','2023-06-10'),(4,'赵前台',2,'13800004444','2024-01-05'),(5,'刘管理员',3,'13800005555','2022-12-01'),(6,'陈教练',1,'13800006666','2024-02-14'),(7,'周前台',2,'13800007777','2024-03-01');
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `employee_role`
 --
 
@@ -191,35 +220,6 @@ INSERT INTO `employee_role` VALUES (1,'Trainer','健身教练，负责课程教�
 UNLOCK TABLES;
 
 --
--- Table structure for table `employee`
---
-
-DROP TABLE IF EXISTS `employee`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `employee` (
-  `employee_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `role_id` int DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `hire_date` date NOT NULL,
-  PRIMARY KEY (`employee_id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `employee_role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表：存储健身房员工信息，包括教练、前台和管理员';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `employee`
---
-
-LOCK TABLES `employee` WRITE;
-/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'张教练',1,'13800001111','2023-01-15'),(2,'李教练',1,'13800002222','2023-03-20'),(3,'王教练',1,'13800003333','2023-06-10'),(4,'赵前台',2,'13800004444','2024-01-05'),(5,'刘管理员',3,'13800005555','2022-12-01'),(6,'陈教练',1,'13800006666','2024-02-14'),(7,'周前台',2,'13800007777','2024-03-01');
-/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `member`
 --
 
@@ -236,7 +236,7 @@ CREATE TABLE `member` (
   `register_date` datetime DEFAULT NULL,
   `status` enum('active','inactive','frozen') DEFAULT 'active',
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员表：存储健身房会员的基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员表：存储健身房会员的基本信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +245,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,'张三','13900001111','zhangsan@email.com','male','1995-05-15','2024-01-10 09:30:00','active'),(2,'李四','13900002222','lisi@email.com','female','1998-08-20','2024-02-15 14:20:00','active'),(3,'王五','13900003333','wangwu@email.com','male','1992-03-10','2024-03-05 10:15:00','active'),(4,'赵六','13900004444','zhaoliu@email.com','female','2000-11-25','2024-04-12 16:45:00','active'),(5,'孙七','13900005555','sunqi@email. com','male','1990-07-08','2024-05-20 11:30:00','frozen'),(6,'周八','13900006666','zhouba@email.com','female','1996-12-30','2024-06-08 13:20:00','active'),(7,'吴九','13900007777','wujiu@email.com','male','1994-09-18','2024-07-15 15:10:00','active'),(8,'郑十','13900008888','zhengshi@email.com','female','1999-04-22','2024-08-01 09:00:00','inactive'),(9,'刘一','13900009999','liuyi@email.com','male','1993-01-05','2024-09-10 10:45:00','active'),(10,'陈二','13900000000','chener@email.com','female','1997-06-14','2024-10-05 14:30:00','active');
+INSERT INTO `member` VALUES (1,'张三','13900001111','zhangsan@email.com','male','1995-05-15','2024-01-09 16:00:00','active'),(2,'李四','13900002222','lisi@email.com','female','1998-08-20','2024-02-15 14:20:00','active'),(3,'王五','13900003333','wangwu@email.com','male','1992-03-10','2024-03-05 10:15:00','active'),(4,'赵六','13900004444','zhaoliu@email.com','female','2000-11-25','2024-04-12 16:45:00','active'),(5,'孙七','13900005555','sunqi@email. com','male','1990-07-08','2024-05-20 11:30:00','frozen'),(6,'周八','13900006666','zhouba@email.com','female','1996-12-30','2024-06-08 13:20:00','active'),(7,'吴九','13900007777','wujiu@email.com','male','1994-09-18','2024-07-15 15:10:00','active'),(8,'郑十','13900008888','zhengshi@email.com','female','1999-04-22','2024-08-01 09:00:00','inactive'),(9,'刘一','13900009999','liuyi@email.com','male','1993-01-05','2024-09-10 10:45:00','active'),(10,'陈二','13900000000','chener@email.com','female','1997-06-14','2024-10-05 14:30:00','active');
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,6 +277,38 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table `membership_card`
+--
+
+DROP TABLE IF EXISTS `membership_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `membership_card` (
+  `card_id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int DEFAULT NULL,
+  `type_id` int DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `card_status` enum('active','inactive','expired') DEFAULT 'active',
+  PRIMARY KEY (`card_id`),
+  KEY `member_id` (`member_id`),
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `membership_card_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
+  CONSTRAINT `membership_card_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `membership_type` (`type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员卡表：存储会员的会籍卡信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `membership_card`
+--
+
+LOCK TABLES `membership_card` WRITE;
+/*!40000 ALTER TABLE `membership_card` DISABLE KEYS */;
+INSERT INTO `membership_card` VALUES (1,1,2,'2024-01-10','2025-01-09','expired'),(2,2,1,'2024-11-15','2024-12-14','expired'),(3,3,2,'2024-03-05','2025-03-04','expired'),(4,4,1,'2024-11-12','2024-12-11','expired'),(5,5,2,'2024-05-20','2025-05-19','expired'),(6,6,1,'2024-11-08','2024-12-07','expired'),(7,7,2,'2024-07-15','2025-07-14','expired'),(8,8,1,'2024-08-01','2024-08-31','expired'),(9,9,1,'2024-11-10','2024-12-09','expired'),(10,10,2,'2024-10-05','2025-10-04','expired');
+/*!40000 ALTER TABLE `membership_card` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `membership_type`
 --
 
@@ -301,38 +333,6 @@ LOCK TABLES `membership_type` WRITE;
 /*!40000 ALTER TABLE `membership_type` DISABLE KEYS */;
 INSERT INTO `membership_type` VALUES (1,'Monthly',30,200.00,'月卡会员，有效期30天'),(2,'Yearly',365,1200.00,'年卡会员，有效期365天');
 /*!40000 ALTER TABLE `membership_type` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `membership_card`
---
-
-DROP TABLE IF EXISTS `membership_card`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `membership_card` (
-  `card_id` int NOT NULL AUTO_INCREMENT,
-  `member_id` int DEFAULT NULL,
-  `type_id` int DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `card_status` enum('active','inactive','expired') DEFAULT 'active',
-  PRIMARY KEY (`card_id`),
-  KEY `member_id` (`member_id`),
-  KEY `type_id` (`type_id`),
-  CONSTRAINT `membership_card_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
-  CONSTRAINT `membership_card_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `membership_type` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员卡表：存储会员的会籍卡信息';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `membership_card`
---
-
-LOCK TABLES `membership_card` WRITE;
-/*!40000 ALTER TABLE `membership_card` DISABLE KEYS */;
-INSERT INTO `membership_card` VALUES (1,1,2,'2024-01-10','2025-01-09','active'),(2,2,1,'2024-11-15','2024-12-14','active'),(3,3,2,'2024-03-05','2025-03-04','active'),(4,4,1,'2024-11-12','2024-12-11','active'),(5,5,2,'2024-05-20','2025-05-19','active'),(6,6,1,'2024-11-08','2024-12-07','active'),(7,7,2,'2024-07-15','2025-07-14','active'),(8,8,1,'2024-08-01','2024-08-31','expired'),(9,9,1,'2024-11-10','2024-12-09','active'),(10,10,2,'2024-10-05','2025-10-04','active');
-/*!40000 ALTER TABLE `membership_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -568,4 +568,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-01 17:43:52
+-- Dump completed on 2025-12-04 19:56:40
