@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
-  `booking_id` int NOT NULL,
+  `booking_id` int NOT NULL AUTO_INCREMENT,
   `member_id` int DEFAULT NULL,
   `course_id` int DEFAULT NULL,
   `booking_time` datetime NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `booking` (
   KEY `course_id` (`course_id`),
   CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
   CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='预约表：存储会员对课程的预约记录';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='预约表：存储会员对课程的预约记录';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,14 +76,14 @@ DROP TABLE IF EXISTS `check_in`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `check_in` (
-  `checkin_id` int NOT NULL,
+  `checkin_id` int NOT NULL AUTO_INCREMENT,
   `member_id` int DEFAULT NULL,
   `checkin_time` datetime NOT NULL,
   `checkout_time` datetime DEFAULT NULL,
   PRIMARY KEY (`checkin_id`),
   KEY `member_id` (`member_id`),
   CONSTRAINT `check_in_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='打卡表：记录会员的签到签退信息';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='打卡表：记录会员的签到签退信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course` (
-  `course_id` int NOT NULL,
+  `course_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `type` enum('yoga','spinning','pilates','aerobics','strength','other') DEFAULT 'other',
   `duration` int NOT NULL COMMENT 'Course duration in minutes',
@@ -113,7 +113,7 @@ CREATE TABLE `course` (
   PRIMARY KEY (`course_id`),
   KEY `employee_id` (`employee_id`),
   CONSTRAINT `course_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='课程表：存储健身房提供的课程信息及对应教练';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='课程表：存储健身房提供的课程信息及对应教练';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `employee` (
-  `employee_id` int NOT NULL,
+  `employee_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `role_id` int DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`employee_id`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `employee_role` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表：存储健身房员工信息，包括教练、前台和管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工表：存储健身房员工信息，包括教练、前台和管理员';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +227,7 @@ DROP TABLE IF EXISTS `member`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `member` (
-  `member_id` int NOT NULL,
+  `member_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE `member` (
   `register_date` datetime DEFAULT NULL,
   `status` enum('active','inactive','frozen') DEFAULT 'active',
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员表：存储健身房会员的基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员表：存储健身房会员的基本信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -283,7 +283,7 @@ DROP TABLE IF EXISTS `membership_card`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `membership_card` (
-  `card_id` int NOT NULL,
+  `card_id` int NOT NULL AUTO_INCREMENT,
   `member_id` int DEFAULT NULL,
   `card_type` enum('yearly','monthly') DEFAULT 'monthly',
   `start_date` date DEFAULT NULL,
@@ -292,7 +292,7 @@ CREATE TABLE `membership_card` (
   PRIMARY KEY (`card_id`),
   KEY `member_id` (`member_id`),
   CONSTRAINT `membership_card_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员卡表：存储会员的会籍卡信息，包括年卡和月卡';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='会员卡表：存储会员的会籍卡信息，包括年卡和月卡';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +331,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `order_id` int NOT NULL,
+  `order_id` int NOT NULL AUTO_INCREMENT,
   `member_id` int DEFAULT NULL,
   `order_type` enum('membership','product','course') NOT NULL,
   `amount` decimal(10,2) NOT NULL,
@@ -340,7 +340,7 @@ CREATE TABLE `order` (
   PRIMARY KEY (`order_id`),
   KEY `member_id` (`member_id`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='订单表：存储所有类型的订单信息（会员卡、产品、课程）';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='订单表：存储所有类型的订单信息（会员卡、产品、课程）';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,12 +389,12 @@ DROP TABLE IF EXISTS `product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
-  `product_id` int NOT NULL,
+  `product_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='产品表：存储健身房销售的产品信息及库存';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='产品表：存储健身房销售的产品信息及库存';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
